@@ -22,12 +22,26 @@ async def proccess(file: UploadFile):
     # Resize the overlay image to match the frame size
     hf, wf, _ = img.shape
 
-    new_width = int(imgFront.shape[1]/imgFront.shape[0] * hf)
-    x_offset = (wf - new_width) // 2
+    ratio = imgFront.shape[1]/imgFront.shape[0]
+
+    print(imgFront.shape)
+
+
+    new_width = int(ratio * hf)
+    x_diff = wf - new_width
+    x_offset = x_diff // 2
+
+
+    scale = new_width / imgFront.shape[1]
+
+    x1, y1 = (int((scale * 550) + x_offset), int(scale * 506))
+    x2, y2 = (int((scale * 1060) + x_offset), int(scale * 936))
 
     imgFront = cv2.resize(imgFront, (new_width, hf))
 
     imgResult = cvzone.overlayPNG(img, imgFront, pos=[x_offset, 0])
+
+    imgResult = imgResult[y1:y2, x1:x2]
 
     imgResult = cv2.resize(imgResult,dsize=None, fx = 0.5, fy=0.5)
 
