@@ -63,7 +63,7 @@ async def proccess(file: UploadFile):
         'tongue_area': tongue_area,
         'white_area': white_area,
         'white_area_pertencage': white_area_percentage,
-        'tongue_original': upload(cv2.imencode('.jpg', img)[1].tobytes()),
+        'tongue_original': upload(cv2.imencode('.jpg', imgResult)[1].tobytes()),
         'full_tongue': upload(cv2.imencode('.jpg', tongue_mask)[1].tobytes()),
         'red_mask': upload(cv2.imencode('.jpg', red_mask)[1].tobytes()),
         'white_mask': upload(cv2.imencode('.jpg', white_mask)[1].tobytes())
