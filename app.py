@@ -59,16 +59,13 @@ async def proccess(file: UploadFile):
     #     print('Lidah teridentifikasi warna putih')
     #     print('Periksa penyakit anda lebih lanjut')
 
-
 def upload(file):
     r = requests.post(
         'https://pomf.lain.la/upload.php',
-        files=[('files[]', file)]
+        files={'files[]': ("tes.jpg", file, "image/jpeg")}
     )
 
     return r.json()['files'][0]['url']
-
-
 
 def detect_full_tongue(image):
     hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
