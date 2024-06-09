@@ -29,4 +29,4 @@ COPY . /app
 EXPOSE 8000
 
 # Set the entry point to run app.py
-CMD ["python", "app.py"]
+CMD ["fastapi", "run", "app.py", "--port", "8000"]
