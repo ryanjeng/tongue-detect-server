@@ -37,12 +37,19 @@ async def proccess(file: UploadFile):
     white_area = cv2.countNonZero(white_mask)
     tongue_area = cv2.countNonZero(tongue_mask)
 
+    if tongue_area == 0:
+        return {
+            'success': False,
+            'message': 'Lidah tidak terdeteksi'
+        }
+
     white_area_percentage = (white_area / tongue_area) * 100
 
     return {
         'tongue_area': tongue_area,
         'white_area': white_area,
         'white_area_pertencage': white_area_percentage,
+        'tongue_original': upload(cv2.imencode('.jpg', img)[1].tobytes()),
         'full_tongue': upload(cv2.imencode('.jpg', tongue_mask)[1].tobytes()),
         'red_mask': upload(cv2.imencode('.jpg', red_mask)[1].tobytes()),
         'white_mask': upload(cv2.imencode('.jpg', white_mask)[1].tobytes())
